@@ -12,7 +12,7 @@ The primary intended use of this model is educational and research purposes to d
 The model was trained on an 80% split of the publicly available Census Bureau Income dataset (`census.csv`), consisting of 26,048 records. Features include demographic and socioeconomic indicators such as age, workclass, education, marital status, occupation, relationship, race, sex, capital gain, capital loss, hours worked per week, and country of origin. Target labels were binarized into 0 (`<=50K`) and 1 (`>50K`).
 
 ## Evaluation Data
-Model evaluation was performed on a held-out test split comprising the remaining 20% of the dataset (6,513 records). The test split was stratified and held separate throughout feature encoding and model training to evaluate performance on unseen data.
+Model evaluation was performed on a held-out test split comprising the remaining 20% of the dataset (6,513 records), created using a random 80-20 train-test split (`test_size=0.20`, `random_state=42`). The test split was held separate throughout feature encoding and model training to evaluate performance on unseen data.
 
 ## Metrics
 The model was evaluated using binary classification metrics focused on positive income prediction (`>50K`):

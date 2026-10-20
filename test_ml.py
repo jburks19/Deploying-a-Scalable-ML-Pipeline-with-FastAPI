@@ -13,6 +13,7 @@ def sample_data():
     y = np.random.choice([0, 1], size=50)
     return X, y
 
+
 # TODO: implement the first test. Change the function name and input as needed
 def test_train_model(sample_data):
     # check that model trains and returns a random forest
@@ -40,6 +41,7 @@ def test_compute_model_metrics():
     preds = np.array([1, 0, 0, 0, 1])
     precision, recall, fbeta = compute_model_metrics(y, preds)
 
-    for metric in [precision, recall, fbeta]:
-        assert isinstance(metric, float)
-        assert 0.0 <= metric <= 1.0
+# TP = 2, FP = 0, FN = 1 -> Precision = 1.0, Recall = 2/3, F1 = 0.8
+    assert precision == pytest.approx(1.0)
+    assert recall == pytest.approx(2 / 3)
+    assert fbeta == pytest.approx(0.8)
