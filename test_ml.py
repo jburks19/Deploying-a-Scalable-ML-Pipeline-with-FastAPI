@@ -1,28 +1,45 @@
 import pytest
 # TODO: add necessary import
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from ml.model import train_model, compute_model_metrics, inference
+
+
+@pytest.fixture
+def sample_data():
+    # generate small synthetic dataset for testing
+    np.random.seed(42)
+    X = np.random.rand(50, 10)
+    y = np.random.choice([0, 1], size=50)
+    return X, y
 
 # TODO: implement the first test. Change the function name and input as needed
-def test_one():
-    """
-    # add description for the first test
-    """
-    # Your code here
-    pass
+def test_train_model(sample_data):
+    # check that model trains and returns a random forest
+    X, y = sample_data
+    model = train_model(X, y)
+    assert isinstance(model, RandomForestClassifier)
+    assert hasattr(model, "classes_")
 
 
 # TODO: implement the second test. Change the function name and input as needed
-def test_two():
-    """
-    # add description for the second test
-    """
-    # Your code here
-    pass
+def test_inference(sample_data):
+    # verify predictions have correct shape and binary values
+    X, y = sample_data
+    model = train_model(X, y)
+    preds = inference(model, X)
+    assert isinstance(preds, np.ndarray)
+    assert len(preds) == len(X)
+    assert set(preds).issubset({0, 1})
 
 
 # TODO: implement the third test. Change the function name and input as needed
-def test_three():
-    """
-    # add description for the third test
-    """
-    # Your code here
-    pass
+def test_compute_model_metrics():
+    # check metrics return valid float scores between 0 and 1
+    y = np.array([1, 1, 0, 0, 1])
+    preds = np.array([1, 0, 0, 0, 1])
+    precision, recall, fbeta = compute_model_metrics(y, preds)
+
+    for metric in [precision, recall, fbeta]:
+        assert isinstance(metric, float)
+        assert 0.0 <= metric <= 1.0
